@@ -1,8 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const { uuid, isUuid } = require('uuidv4');
+const cors = require('cors');
 
 const app = express();
+app.use(cors({
+  origin: 'http://localhost:8080'
+}));
 app.use(bodyParser.json());
 
 const projects = [];
