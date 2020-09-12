@@ -1,9 +1,8 @@
 import { getRepository, getCustomRepository } from "typeorm";
 import UsersRepository from "../repositories/UsersRepository";
 import { compare } from "bcryptjs";
-import User from "../models/User";
 import { sign } from 'jsonwebtoken';
-
+import authConfig from "../config/auth";
 
 interface Request {
   email: string;
@@ -20,12 +19,13 @@ class AuthenticateUserService {
     }
 
     delete user.password;
+    const { secret, expiresIn } = authConfig.jwt;
 
     const token = await sign({
       name: user.name,
-    }, 'not-a-secret', {
+    }, secret, {
       subject: user.id,
-      expiresIn: '1d'
+      expiresIn: expiresIn
     });
 
     return token;
