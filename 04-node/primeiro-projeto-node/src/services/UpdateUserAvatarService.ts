@@ -1,4 +1,4 @@
-import { getRepository, getCustomRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import User from '../models/User';
 import path from 'path';
 import fs from 'fs';
@@ -29,6 +29,7 @@ class UpdateUserAvatarService {
     user.avatar = avatar_filename;
     await userRepository.save(user);
 
+    delete user.password;
     return user;
   }
 }
