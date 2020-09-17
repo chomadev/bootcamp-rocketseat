@@ -2,6 +2,7 @@ import User from '../models/User';
 import UsersRepository from '../repositories/UsersRepository';
 import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
+import AppError from '../errors/AppError';
 
 interface Request {
   name: string;
@@ -16,7 +17,7 @@ class CreateUserService {
     const userFound = await usersRepository.findByEmail(email);
 
     if (userFound) {
-      throw Error('This email is already in use');
+      throw new AppError('This email is already in use');
     }
 
     const hashedPassword = await hash(password, 8);

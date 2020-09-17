@@ -3,6 +3,7 @@ import UsersRepository from "../repositories/UsersRepository";
 import { compare } from "bcryptjs";
 import { sign } from 'jsonwebtoken';
 import authConfig from "../config/auth";
+import AppError from "../errors/AppError";
 
 interface Request {
   email: string;
@@ -15,7 +16,7 @@ class AuthenticateUserService {
 
     const user = await usersRepository.findByEmail(email);
     if (!user || !await compare(password, user.password)) {
-      throw new Error('Invalid credentials');
+      throw new AppError('Invalid credentials', 401);
     }
 
     delete user.password;
