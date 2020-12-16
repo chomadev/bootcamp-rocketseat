@@ -1,13 +1,22 @@
 import React from 'react';
 import GlobalStyle from './styles/global';
-import SingUp from "./pages/SignUp";
+import { AuthProvider } from './hooks/AuthContext';
+import { ToastProvider } from './hooks/ToastContext';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './routes'
 
 const App: React.FC = () => {
   return (
-    <>
+    <Router>
       <GlobalStyle />
-      <SingUp />
-    </>
+      <AuthProvider>
+          <ToastProvider>
+          <Routes />
+          </ToastProvider>
+      </AuthProvider>
+
+
+    </Router>
   );
 }
 

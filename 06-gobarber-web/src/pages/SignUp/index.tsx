@@ -18,9 +18,8 @@ const SignUp: React.FC = () => {
 
       await schema.validate(data);
     } catch (error) {
-      console.log(err);
+      console.log(error);
     }
-    console.log(data);
   }
 
   return (
